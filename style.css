@@ -1,5 +1,12 @@
+:root {
+    --primary-dark: #333;
+    --primary-light: #ededed;
+    --secondary-light: #fefefe;
+  }
+
 html,body{
     height: 100%;
+    background-color: var(--primary-light);
 }
 button{
     width: 75px;
@@ -12,14 +19,38 @@ button{
 }
 input{
     width: 225px;
-    height: 40px;
-    padding: 0px;
+    height: 75px;
+    padding: 10px;
     border: 1px;
     border-style: solid;
-    border-radius: 3px;
+    box-sizing: border-box;
 }
-#buttons{
+#numbers{
     width: 225px;
     display: flex;
     flex-wrap: wrap;
+}
+#main{
+    display: flex;
+    width: 300px;
+    border: 2px;
+    border-radius: 3px;
+    border-style: solid;
+}
+#arithmeticButtons{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+#outputWindow{
+    text-align: right;
+}
+button:hover{
+    transform: scale(1.05);
+    background-color: var(--secondary-light);
+}
+button:active{
+    background-color: var(--secondary-light);
+    transform: scale(0.95);
 }
