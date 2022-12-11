@@ -1,43 +1,82 @@
-const numbers = document.getElementById('numbers');
-const outputWindow = document.getElementById('outputWindow');
-const arithmeticButtons = document.querySelectorAll(".arithmetic")
+const numbers = Array.from(document.getElementsByClassName("numbers"));
+const input = document.getElementById('outputWindow');
+const arithmeticButtons = Array.from(document.getElementsByClassName("arithmetic"));
+const solutionDisplay = document.getElementById("solution");
+const clearButton = document.getElementById("clear");
 let numberOne = "";
 let numberTwo = 0;
+let operator = "";
 let solution = 0;
-let setNumberOne = false;
-let setNumberTwo = false;
-console.table(arithmeticButtons);
+let operatorClicked = false;
 
-function Buttons (){ //create 10 Buttons
-    for(i=0; i<10; i++){
-        number = document.createElement("button");
-        number.value = i;
-        number.textContent = i;
-        number.type = "button";
-        number.addEventListener("click", inputNumber);
-        numbers.appendChild(number);
+numbers.forEach(number => {
+    number.addEventListener("click", addingToNumber);
+})
+
+arithmeticButtons.forEach(button => {
+    button.addEventListener("click", arithClicked)
+})
+
+clearButton.addEventListener("click", () => {
+    numberOne = "";
+    numberTwo = 0;
+    input.value = 0;
+    solutionDisplay.textContent = "";
+    operatorClicked = false;
+})
+
+
+function setDisplay(mainOutput, secondOutput){
+    input.value = mainOutput;
+    solutionDisplay.textContent = secondOutput;
+}
+
+function arithClicked(e){
+    if(e.target.id != "=")operator = e.target.id;
+    
+    if(e.target.id == "="){
+        console.log(numberTwo, parseFloat(numberOne), operator);
+        solution = operate(numberTwo, parseFloat(numberOne), operator);
+        numberTwo = solution;
+        numberOne = "";
+        setDisplay(0, solution);
+        return;
+    }
+    if(!operatorClicked){
+    numberTwo = parseFloat(numberOne);
+    numberOne = "";
+    setDisplay(0, numberTwo);
+    operatorClicked = true;
     }
 }
 
-for(i=0 ; i< arithmeticButtons.length ; i++){
-    arithmeticButtons[i].addEventListener("click", Calculate);
-}
 
-function Calculate(e){
-    
-    numberTwo = parseFloat(numberOne);
-    numberOne = "";
-    outputWindow.value = 0;
-}
 
-function inputNumber(e){ //Setting values for calculation
+
+function addingToNumber(e){
     numberOne += e.target.value;
-    outputWindow.value = parseFloat(numberOne);
+    input.value = numberOne;
 }
+
+// Arithmetic
+function add(numberOne, numberTwo){ return numberOne + numberTwo;}
+function subtract(numberOne, numberTwo){ return numberOne - numberTwo;}
+function divide(numberOne, numberTwo){ return numberOne / numberTwo;}
+function multiply(numberOne, numberTwo){ return numberOne * numberTwo;}
+
+
+function operate (numberOne, numberTwo, operate){
+    switch(operate){
+        case '+': return add(numberOne, numberTwo);
+        case '-': return subtract(numberOne, numberTwo); 
+        case 'x': return multiply(numberOne, numberTwo);
+        case '/': return divide(numberOne, numberTwo);
+    }
+}
+
 
 
 
 
 window.onload = () => {
-    Buttons();
 }
