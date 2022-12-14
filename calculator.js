@@ -1,13 +1,21 @@
+
+//Variables
 const numbers = Array.from(document.getElementsByClassName("numbers"));
 const input = document.getElementById('outputWindow');
 const arithmeticButtons = Array.from(document.getElementsByClassName("arithmetic"));
 const solutionDisplay = document.getElementById("solution");
 const clearButton = document.getElementById("clear");
-let numberOne = "";
-let numberTwo = 0;
+const comma = document.getElementById("comma");
+const equalButton = document.getElementById("equalButton");
+let commaSet = false;
+let inputString = "";
+let numberOne = 0;
 let operator = "";
 let solution = 0;
 let operatorClicked = false;
+let equal = false;
+
+//Event handlers
 
 numbers.forEach(number => {
     number.addEventListener("click", addingToNumber);
@@ -18,44 +26,56 @@ arithmeticButtons.forEach(button => {
 })
 
 clearButton.addEventListener("click", () => {
-    numberOne = "";
-    numberTwo = 0;
+    numberOne = 0;
+    inputString = "";
     input.value = 0;
     solutionDisplay.textContent = "";
     operatorClicked = false;
+    commaSet = false;
 })
 
+comma.addEventListener("click", ()=>{
+    if(!commaSet) inputString += ".";
+    commaSet = true;
+    input.value = inputString;
+})
+
+
+//Functions
 
 function setDisplay(mainOutput, secondOutput){
     input.value = mainOutput;
     solutionDisplay.textContent = secondOutput;
 }
 
+equalButton.addEventListener("click", ()=>{
+    if(!operatorClicked || inputString.length==0) return; //Cancel Arguments
+
+    solution = operate(numberOne, parseFloat(inputString), operator);
+    solution = Math.round(solution*100) / 100;
+    setDisplay(0, solution);
+    inputString = "";
+    equal = true;
+    commaSet = false;
+    numberOne = solution;
+})
+
 function arithClicked(e){
-    if(e.target.id != "=")operator = e.target.id;
-    
-    if(e.target.id == "="){
-        console.log(numberTwo, parseFloat(numberOne), operator);
-        solution = operate(numberTwo, parseFloat(numberOne), operator);
-        numberTwo = solution;
-        numberOne = "";
-        setDisplay(0, solution);
-        return;
-    }
-    if(!operatorClicked){
-    numberTwo = parseFloat(numberOne);
-    numberOne = "";
-    setDisplay(0, numberTwo);
+    operator = e.target.id;
+
+    if(operatorClicked || equal) return; //Cancel Arguments
+    commaSet = false;
     operatorClicked = true;
-    }
+    numberOne = parseFloat(inputString);
+    inputString = "";
+    setDisplay("0", numberOne);
 }
 
 
 
-
 function addingToNumber(e){
-    numberOne += e.target.value;
-    input.value = numberOne;
+    inputString += e.target.value;
+    input.value = inputString;
 }
 
 // Arithmetic
