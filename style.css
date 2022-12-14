@@ -17,13 +17,15 @@ button{
     border-radius: 3px;
     padding: 0px;
 }
-#outputWindow{
+#inputWindow{
+    margin: 0px;
     width: 225px;
     height: 50px;
     padding: 10px;
-    border: 1px;
-    border-style: solid;
+    border: 0px;
     box-sizing: border-box;
+    text-align: right;
+    color: black;
 }
 #solution{
     width: 225px;
@@ -33,7 +35,7 @@ button{
     margin: 0px;
     padding: 10px;
     color: grey;
-    background-color: white;
+    box-sizing: border-box;
 }
 #numbers{
     width: 225px;
@@ -53,10 +55,6 @@ button{
     flex-direction: column;
 }
 
-#outputWindow{
-    border: 0px;
-    text-align: right;
-}
 button:hover{
     transform: scale(1.05);
     background-color: var(--secondary-light);

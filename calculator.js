@@ -1,7 +1,7 @@
 
 //Variables
 const numbers = Array.from(document.getElementsByClassName("numbers"));
-const input = document.getElementById('outputWindow');
+const input = document.getElementById('inputWindow');
 const arithmeticButtons = Array.from(document.getElementsByClassName("arithmetic"));
 const solutionDisplay = document.getElementById("solution");
 const clearButton = document.getElementById("clear");
@@ -17,6 +17,12 @@ let equal = false;
 
 //Event handlers
 
+// document.addEventListener("keydown", (e) =>{
+//     if(e.keyCode < 48 || e.keyCode > 57) return; //Not a number
+
+//     addingToNumber(e.keyCode-48);
+// })
+
 numbers.forEach(number => {
     number.addEventListener("click", addingToNumber);
 })
@@ -28,7 +34,7 @@ arithmeticButtons.forEach(button => {
 clearButton.addEventListener("click", () => {
     numberOne = 0;
     inputString = "";
-    input.value = 0;
+    input.textContent = 0;
     solutionDisplay.textContent = "";
     operatorClicked = false;
     commaSet = false;
@@ -37,18 +43,18 @@ clearButton.addEventListener("click", () => {
 comma.addEventListener("click", ()=>{
     if(!commaSet) inputString += ".";
     commaSet = true;
-    input.value = inputString;
+    input.textContent = inputString;
 })
 
 
 //Functions
 
-function setDisplay(mainOutput, secondOutput){
-    input.value = mainOutput;
+function setDisplay(mainOutput, secondOutput){ //set display
+    input.textContent = mainOutput;
     solutionDisplay.textContent = secondOutput;
 }
 
-equalButton.addEventListener("click", ()=>{
+equalButton.addEventListener("click", ()=>{ //Event for handling "=" Button
     if(!operatorClicked || inputString.length==0) return; //Cancel Arguments
 
     solution = operate(numberOne, parseFloat(inputString), operator);
@@ -73,9 +79,9 @@ function arithClicked(e){
 
 
 
-function addingToNumber(e){
+function addingToNumber(e){ //Adding Input to String
     inputString += e.target.value;
-    input.value = inputString;
+    input.textContent = inputString;
 }
 
 // Arithmetic
